@@ -1,6 +1,7 @@
 # A Generative Adversarial NetWork
 # prerequisite: torch, torchvision, torchsummary, numpy, matplotlib, tqdm
 import torch
+torch.manual_seed(42)
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -16,13 +17,16 @@ beta_2 = 0.99
 
 epochs = 20
 # Load MNIST Dataset
+import pylab
 from torchvision import datasets, transforms as T
 train_augs = T.Compose([T.RandomRotation((-20, 20)), T.ToTensor()])
-trainset = datasets.MNIST('MNIST/', download = True, train = T, transform = train_augs)
+trainset = datasets.MNIST('MNIST/', download = True, train = True, transform = train_augs)
 image, label = trainset[5]
+#plt.figure()
 plt.imshow(image.squeeze(), cmap = 'gray')
+pylab.show()
 print("total_images present in trainset are:", len(trainset))
- 
+
 # Load Dataset into Batches
 
 from torchvision.utils import make_grid
@@ -38,6 +42,7 @@ def show_tensor_images(tensor_img, num_images = 16, size=(1, 28, 28)):
     unflat_image = tensor_img.detach().cpu()
     img_grid = make_grid(unflat_image[:num_images], nrow = 4)
     plt.imshow(img_grid.permute(1, 2, 0).squeeze())
+    pylab.show() #debug: correct the imshow can't display
 
 show_tensor_images(images, num_images = 16)
 
@@ -79,7 +84,7 @@ def get_gen_block(in_channels, out_channels, kernel_size, stride, final_block = 
     return nn.Sequential(
         nn.ConvTranspose2d(in_channels, out_channels, kernel_size, stride),
         nn.BatchNorm2d(out_channels),
-        nn.LeakyReLU())
+        nn.ReLU())
 
 class Generator(nn.Module):
     def __init__(self, noise_dim):
@@ -89,7 +94,6 @@ class Generator(nn.Module):
         self.block_2 = get_gen_block(256, 128, (4, 4), 1)
         self.block_3 = get_gen_block(128, 64, (3, 3), 2)
         self.block_4 = get_gen_block(64, 1, (4, 4), 2, final_block = True)
-        self.linear = nn.Linear(in_features = 64, out_features = 1)
     
     def forward(self, r_noise_vec):
         x = r_noise_vec.view(-1, self.noise_dim, 1, 1)
@@ -140,18 +144,23 @@ for i in range(epochs):
 
         # find loss and update weights for D
         D_opt.zero_grad()
+
         fake_img = G(noise)
         D_pred = D(fake_img)
         D_fake_loss = fake_loss(D_pred)
+
         D_pred = D(real_img)
         D_real_loss = real_loss(D_pred)
+        
         D_loss = (D_fake_loss + D_real_loss) / 2
         total_d_loss += D_loss.item()
+        
         D_loss.backward()
         D_opt.step()
 
         # find loss and update weights for G
         G_opt.zero_grad()
+
         noise = torch.randn(batch_size, noise_dim, device = device)
         fake_img = G(noise)
         D_pred = D(fake_img)
@@ -164,5 +173,10 @@ for i in range(epochs):
     avg_g_loss = total_g_loss / len(trainloader)
 
     print("Epoch:{} | D_loss: {}, G_loss: {}".format(i+1, avg_d_loss, avg_g_loss))
-    #show_tensor_images(fake_img)
-show_tensor_images(fake_img)
+    if (i+1) % 4 == 0:
+        show_tensor_images(fake_img)
+
+noise = torch.randn(batch_size, noise_dim, device = device)
+generated_img = G(noise)
+
+show_tensor_images(generated_img)
