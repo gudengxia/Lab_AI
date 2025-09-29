@@ -5,7 +5,7 @@ use candle_guide::rtorch::multilinear::example::simplified;
 
 #[tokio::main]
 async fn main()->Result<()>{
-    simplified();
+    //simplified();
 
     let data = dataset::Dataset::new()?;
     let model = model::MultiLevelPerceptron::new()?;
