@@ -1,8 +1,6 @@
 use burn_guide::{model::ModelConfig, training,training::{TrainingConfig}, inference::infer};
 use burn::{
-    backend::Autodiff,
-    //backend::Wgpu,
-    optim::AdamConfig,
+    backend::Autodiff, data::dataset::Dataset, optim::AdamConfig
 };
 //use burn_candle::{Candle, CandleDevice};
 use burn_ndarray::NdArrayDevice;
@@ -35,8 +33,6 @@ fn main() {
     infer::<MyBackend>(
         artifact_dir,
         device,
-        burn::data::dataset::vision::MnistDataset::test()
-            .get(42)
-            .unwrap(),
+        burn::data::dataset::vision::MnistDataset::test().get(42).unwrap(),
     );
 }

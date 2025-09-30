@@ -4,7 +4,7 @@ use burn::{
 };
 
 
-#[derive(Clone, Default)]
+#[derive(Clone, Debug, Default)]
 pub struct MnistBatcher {}
 
 #[derive(Clone, Debug)]
