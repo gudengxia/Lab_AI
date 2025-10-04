@@ -27,7 +27,7 @@ fn main() {
    
     crate::training::train::<MyAutodiffBackend>(
         artifact_dir,
-        TrainingConfig::new(ModelConfig::new(10, 512), AdamConfig::new()),
+        TrainingConfig::new(ModelConfig::new(10, 64), AdamConfig::new()),
         device.clone(),
     );
     infer::<MyBackend>(
