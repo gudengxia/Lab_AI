@@ -1,20 +1,33 @@
 
 use candle_core::Result;
-use candle_guide::rtorch::multilinear::{model, dataset, training};
-use candle_guide::rtorch::multilinear::example::simplified;
+use candle_guide::simple_linear::{a_linear::Learner, dataset, model, training};
+//use candle_guide::candle_torch::example::simplified;
 
 #[tokio::main]
-async fn main()->Result<()>{
+async fn main() -> Result<()>{
+    //let data = dataset::Dataset::new(1024, 100)?;
+    let data = dataset::Dataset::read_from_csv("../../dataset/regression.csv")?;
+    //println!("{:?}", data.x_train.to_vec2::<f64>()?);
+    //println!("{:?}", data.y_train.to_vec2::<f64>()?);
+    let model = model::ALinearPerceptron::new()?;
+    let trainer = training::Trainer::new(10,  64); 
+    trainer.fit(&model, &data)?;
+    let _ = model.validate()?;
+    let learner = Learner::new(10, 64);
+    let _ = learner.train(data);
+    Ok(())
+}
+/*async fn main()->Result<()>{
     //simplified();
 
     let data = dataset::Dataset::new()?;
     let model = model::MultiLevelPerceptron::new()?;
-    let trainer = training::Trainer::new();  
+    let trainer = training::Trainer{};  
     trainer.fit(&model, data)?;
     //trainer.train(data);
     model.validate()?;
     Ok(())
-}
+}*/
 /*async fn main(){
     const device: Device = Device::Cpu;
     //simplified();

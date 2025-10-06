@@ -1,0 +1,19 @@
+[package]
+name = "burn-gan"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+burn = { version = "~0.18", features = [
+    "train",
+    "vision",
+    "metrics",
+    "std",
+    "fusion",
+    "ndarray",
+    "autotune",
+], default-features = false }
+
+#burn-candle = {version = "~0.18"}
+burn-ndarray = {version = "~0.18"}
+#tch = { version = "0.18", features = ["download-libtorch"] }

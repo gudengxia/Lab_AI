@@ -17,7 +17,6 @@ pub mod example
 {
     use candle_core::{DType, Result, Tensor, D, Device};
     use candle_nn::{loss, ops, Linear, Module, VarBuilder, VarMap, Optimizer};
-    use anyhow::Error;
     const VOTE_DIM: usize = 2;
     const RESULTS: usize = 1;
     const EPOCHS: usize = 10;

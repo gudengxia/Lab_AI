@@ -1,16 +1,12 @@
 use candle_core::{DType, Result, D};
 use candle_nn::{ops, Optimizer, VarBuilder, VarMap};
-use crate::rtorch::multilinear::{dataset::Dataset, model:: {MultiLevelPerceptron,ExPerceptron}};
+use crate::candle_torch::{dataset::Dataset, model:: {MultiLevelPerceptron,ExPerceptron}};
 use super::*;
 
 pub struct Trainer{
 }
 
 impl Trainer {
-    pub fn new() -> Trainer{
-        Trainer {}
-    }
-
     pub fn fit(&self, model: &MultiLevelPerceptron, data: Dataset)->Result<MultiLevelPerceptron>{
         let mut sgd = model.configure_optimizers()?;
         let x_train = data.x_train.to_device(&device)?;
@@ -26,7 +22,7 @@ impl Trainer {
             sgd.backward_step(&loss)?;
             
             let test_logits = model.forward(&x_test)?;
-           
+
             let sum_ok = test_logits
                 .argmax(D::Minus1)?
                 .eq(&y_test)?
@@ -46,6 +42,7 @@ impl Trainer {
         }
         Ok((*model).clone())
     }
+
 
     pub fn train(&self, m: Dataset) -> anyhow::Result<ExPerceptron> {
         let train_results = m.y_train.to_device(&device)?;
