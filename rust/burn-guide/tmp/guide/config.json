@@ -1,0 +1,11 @@
+{
+  "optimizer": {
+    "weight_decay": null,
+    "momentum": null,
+    "gradient_clipping": null
+  },
+  "num_epochs": 3,
+  "num_workers": 1,
+  "seed": 1337,
+  "batch_size": 64
+}

@@ -4,6 +4,7 @@ use crate::simple_linear::dataset::Dataset;
 use super::*;
 use candle_core::{DType, Result, Tensor};
 use candle_nn::{loss::mse, optim, Linear, Module, Optimizer, VarBuilder, VarMap};
+use std::time::{Duration, Instant};
 
 // a very import lesson here is that a Linear perception should have two parts: w and b
 fn linear_z(in_dim: usize, out_dim: usize, vs: VarBuilder)->Result<Linear>{
@@ -66,9 +67,11 @@ impl Learner{
         let nbatches = n / self.batch_size;
         let mut idxs = (0..nbatches).collect::<Vec<usize>>();
         
+        let mut total_time = 0u128;
         for epoch in 0..self.epochs{
             let mut sum_loss = 0.0f64;
             idxs.shuffle(&mut rng());
+            let start = Instant::now();
             for idx in idxs.iter(){
                 let _x = x_train.narrow(0, idx*self.batch_size, self.batch_size)?;
                 let _y = y_train.narrow(0, idx*self.batch_size, self.batch_size)?;
@@ -77,13 +80,16 @@ impl Learner{
                 sgd.backward_step(&loss)?;
                 sum_loss += loss.to_vec0::<f64>()?;               
             }
-            
+            let diff = start.elapsed().as_micros();
+            println!("Epoch consumes: {}", diff);
+            total_time += diff;
             let avg_loss = sum_loss / (nbatches as f64);
             let y_hat = model.forward(&x_test)?;
             //let accuracy = model.loss(&y_hat, &y_test)?;
             let accuracy = mse(&y_hat, &y_test)?.to_vec0::<f64>()? / (y_test.dim(0)? as f64); 
-            println!("Epoch {:?} -- avg_loss:{:?}, avg_accuracy:{:?}", epoch, avg_loss, accuracy);  
+            println!("Epoch {:?} -- avg_loss:{:?}, avg_accuracy:{:?}\n", epoch, avg_loss, accuracy);     
         }
+        println!("Consume {:?} microseconds totoally.", total_time);
         let _ = model.validate();
         Ok(())
     }

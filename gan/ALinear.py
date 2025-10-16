@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import random
 import pandas as pd
+import time
 class LinearRegressionModel(nn.Module):
     def __init__(self, input_dim, output_dim):
         super(LinearRegressionModel, self).__init__()
@@ -64,9 +65,11 @@ class Learner:
         idxs = list(range(0, len(x_train))) 
         random.shuffle(idxs)
 
+        total_time = 0
         for epoch in range(self.epochs):
             total_loss = 0.0
 
+            start_time = time.perf_counter()
             for i in range(n_batch):
                 x = x_train[range(i * self.batch_size, i * self.batch_size + self.batch_size)]
                 y = y_train[range(i * self.batch_size, i * self.batch_size + self.batch_size)]
@@ -81,18 +84,24 @@ class Learner:
 
                 total_loss += loss
         
+            end_time = time.perf_counter()
+            diff = end_time - start_time
+            total_time += diff
             avg_loss = total_loss / n_batch
-            print("Epoch {} -- avg_loss: {}".format(epoch, avg_loss))
-            y_hat = model(torch.tensor([1.0, 1.0]))
-            print(y_hat)
+            print("Epoch consumes ", diff)
+            print("Epoch {} -- avg_loss: {}\n".format(epoch, avg_loss))
+        
+        print("Cosume time :", total_time )
+        y_hat = model(torch.tensor([1.0, 1.0]))
+        print(y_hat)
 
 if __name__ == "__main__":
     d = Dataset(1024, 128)
     d.save("./../dataset/regression.csv")
-    #x_train, y_train = d.get_train_data()
-    #x_test, y_test = d.get_test_data()
+    x_train, y_train = d.get_train_data()
+    x_test, y_test = d.get_test_data()
     
-    #m = LinearRegressionModel(2, 1)
+    m = LinearRegressionModel(2, 1)
 
-    #leaner = Learner(10, 128) 
-    #leaner.fit(m, d)
+    leaner = Learner(10, 128) 
+    leaner.fit(m, d)

@@ -52,7 +52,7 @@ pub fn train<B: AutodiffBackend>(artifact_dir: &str, config: TrainingConfig, dev
         .shuffle(config.seed)
         .num_workers(config.num_workers)
         .build(MnistDataset::test());
-  
+
     let learner = LearnerBuilder::new(artifact_dir)
         .metric_train_numeric(AccuracyMetric::new())
         .metric_valid_numeric(AccuracyMetric::new())

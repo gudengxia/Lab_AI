@@ -1,0 +1,68 @@
+2025-10-14T08:31:02.071872Z  INFO burn_train::learner::train_val: Fitting the model:
+ RegressionModel {
+  ln: Linear {d_input: 2, d_output: 1, bias: true, params: 3}
+  params: 3
+}
+2025-10-14T08:31:02.072818Z  INFO burn_train::learner::epoch: Executing training step for epoch 1
+2025-10-14T08:31:02.101954Z  INFO burn_train::learner::epoch: Iteration 1
+2025-10-14T08:31:02.118308Z  INFO burn_train::learner::epoch: Iteration 2
+2025-10-14T08:31:02.120086Z  INFO burn_train::learner::epoch: Iteration 3
+2025-10-14T08:31:02.121974Z  INFO burn_train::learner::epoch: Iteration 4
+2025-10-14T08:31:02.123197Z  INFO burn_train::learner::epoch: Iteration 5
+2025-10-14T08:31:02.124546Z  INFO burn_train::learner::epoch: Iteration 6
+2025-10-14T08:31:02.126549Z  INFO burn_train::learner::epoch: Iteration 7
+2025-10-14T08:31:02.129393Z  INFO burn_train::learner::epoch: Iteration 8
+2025-10-14T08:31:02.133143Z  INFO burn_train::learner::epoch: Iteration 9
+2025-10-14T08:31:02.137780Z  INFO burn_train::learner::epoch: Iteration 10
+2025-10-14T08:31:02.141818Z  INFO burn_train::learner::epoch: Iteration 11
+2025-10-14T08:31:02.145582Z  INFO burn_train::learner::epoch: Iteration 12
+2025-10-14T08:31:02.149694Z  INFO burn_train::learner::epoch: Iteration 13
+2025-10-14T08:31:02.153521Z  INFO burn_train::learner::epoch: Iteration 14
+2025-10-14T08:31:02.157354Z  INFO burn_train::learner::epoch: Iteration 15
+2025-10-14T08:31:02.161297Z  INFO burn_train::learner::epoch: Iteration 16
+2025-10-14T08:31:02.163155Z  INFO burn_train::learner::epoch: Executing validation step for epoch 1
+2025-10-14T08:31:02.172562Z  INFO burn_train::learner::epoch: Executing training step for epoch 2
+2025-10-14T08:31:02.172598Z  INFO burn_train::checkpoint::file: Saving checkpoint 1 to ./tmp/guide\checkpoint\model-1
+2025-10-14T08:31:02.172608Z  INFO burn_train::checkpoint::file: Saving checkpoint 1 to ./tmp/guide\checkpoint\optim-1
+2025-10-14T08:31:02.172608Z  INFO burn_train::checkpoint::file: Saving checkpoint 1 to ./tmp/guide\checkpoint\scheduler-1
+2025-10-14T08:31:02.195035Z  INFO burn_train::learner::epoch: Iteration 1
+2025-10-14T08:31:02.199182Z  INFO burn_train::learner::epoch: Iteration 2
+2025-10-14T08:31:02.204133Z  INFO burn_train::learner::epoch: Iteration 3
+2025-10-14T08:31:02.207644Z  INFO burn_train::learner::epoch: Iteration 4
+2025-10-14T08:31:02.211320Z  INFO burn_train::learner::epoch: Iteration 5
+2025-10-14T08:31:02.215399Z  INFO burn_train::learner::epoch: Iteration 6
+2025-10-14T08:31:02.219071Z  INFO burn_train::learner::epoch: Iteration 7
+2025-10-14T08:31:02.222459Z  INFO burn_train::learner::epoch: Iteration 8
+2025-10-14T08:31:02.226144Z  INFO burn_train::learner::epoch: Iteration 9
+2025-10-14T08:31:02.229913Z  INFO burn_train::learner::epoch: Iteration 10
+2025-10-14T08:31:02.233572Z  INFO burn_train::learner::epoch: Iteration 11
+2025-10-14T08:31:02.237027Z  INFO burn_train::learner::epoch: Iteration 12
+2025-10-14T08:31:02.240806Z  INFO burn_train::learner::epoch: Iteration 13
+2025-10-14T08:31:02.244564Z  INFO burn_train::learner::epoch: Iteration 14
+2025-10-14T08:31:02.248313Z  INFO burn_train::learner::epoch: Iteration 15
+2025-10-14T08:31:02.251459Z  INFO burn_train::learner::epoch: Iteration 16
+2025-10-14T08:31:02.273058Z  INFO burn_train::learner::epoch: Executing validation step for epoch 2
+2025-10-14T08:31:02.289995Z  INFO burn_train::checkpoint::file: Saving checkpoint 2 to ./tmp/guide\checkpoint\model-2
+2025-10-14T08:31:02.289995Z  INFO burn_train::learner::epoch: Executing training step for epoch 3
+2025-10-14T08:31:02.289995Z  INFO burn_train::checkpoint::file: Saving checkpoint 2 to ./tmp/guide\checkpoint\scheduler-2
+2025-10-14T08:31:02.289995Z  INFO burn_train::checkpoint::file: Saving checkpoint 2 to ./tmp/guide\checkpoint\optim-2
+2025-10-14T08:31:02.303262Z  INFO burn_train::learner::epoch: Iteration 1
+2025-10-14T08:31:02.307683Z  INFO burn_train::learner::epoch: Iteration 2
+2025-10-14T08:31:02.312157Z  INFO burn_train::learner::epoch: Iteration 3
+2025-10-14T08:31:02.316222Z  INFO burn_train::learner::epoch: Iteration 4
+2025-10-14T08:31:02.320210Z  INFO burn_train::learner::epoch: Iteration 5
+2025-10-14T08:31:02.323800Z  INFO burn_train::learner::epoch: Iteration 6
+2025-10-14T08:31:02.327424Z  INFO burn_train::learner::epoch: Iteration 7
+2025-10-14T08:31:02.330834Z  INFO burn_train::learner::epoch: Iteration 8
+2025-10-14T08:31:02.334843Z  INFO burn_train::learner::epoch: Iteration 9
+2025-10-14T08:31:02.339330Z  INFO burn_train::learner::epoch: Iteration 10
+2025-10-14T08:31:02.343030Z  INFO burn_train::learner::epoch: Iteration 11
+2025-10-14T08:31:02.346773Z  INFO burn_train::learner::epoch: Iteration 12
+2025-10-14T08:31:02.350921Z  INFO burn_train::learner::epoch: Iteration 13
+2025-10-14T08:31:02.354593Z  INFO burn_train::learner::epoch: Iteration 14
+2025-10-14T08:31:02.358135Z  INFO burn_train::learner::epoch: Iteration 15
+2025-10-14T08:31:02.361444Z  INFO burn_train::learner::epoch: Iteration 16
+2025-10-14T08:31:02.375427Z  INFO burn_train::learner::epoch: Executing validation step for epoch 3
+2025-10-14T08:31:02.388993Z  INFO burn_train::checkpoint::file: Saving checkpoint 3 to ./tmp/guide\checkpoint\optim-3
+2025-10-14T08:31:02.388992Z  INFO burn_train::checkpoint::file: Saving checkpoint 3 to ./tmp/guide\checkpoint\model-3
+2025-10-14T08:31:02.388993Z  INFO burn_train::checkpoint::file: Saving checkpoint 3 to ./tmp/guide\checkpoint\scheduler-3

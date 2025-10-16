@@ -20,7 +20,7 @@ epochs = 20
 import pylab
 from torchvision import datasets, transforms as T
 train_augs = T.Compose([T.RandomRotation((-20, 20)), T.ToTensor()])
-trainset = datasets.MNIST('MNIST/', download = True, train = True, transform = train_augs)
+trainset = datasets.MNIST('./../dataset/MNIST/', download = True, train = True, transform = train_augs)
 image, label = trainset[5]
 #plt.figure()
 plt.imshow(image.squeeze(), cmap = 'gray')

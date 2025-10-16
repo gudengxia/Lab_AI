@@ -1,4 +1,4 @@
-use crate::{data::MnistBatcher, training::TrainingConfig};
+use crate::example::{data::MnistBatcher, training::TrainingConfig};
 use burn::{
     data::{dataloader::batcher::Batcher, dataset::vision::MnistItem},
     prelude::*,

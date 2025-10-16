@@ -3,7 +3,10 @@ use burn::{
     prelude::*,
 };
 
+// trait Batcher<B, I,O>{fn batch(&self, items: Vec<I>, device)}->O
+// returns the batch items
 
+//trait Dataset<I>: get, len, is_empty, iter
 #[derive(Clone, Debug, Default)]
 pub struct MnistBatcher {}
 

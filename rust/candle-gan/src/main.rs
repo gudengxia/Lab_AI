@@ -11,7 +11,7 @@ fn main() -> candle_core::Result<()>{
     //let m = mnist::load_dir(path)?;
     //let m = mnist::load()?;
     tracing_subscriber::fmt::init();
-    let dataset_dir = "../../gan/MNIST/MNIST/raw";
+    let dataset_dir = "../../dataset/MNIST/MNIST/raw";
     gz_decoder::decompress_dataset(dataset_dir);
 
     let m = candle_datasets::vision::mnist::load_dir(dataset_dir)?;
@@ -21,7 +21,7 @@ fn main() -> candle_core::Result<()>{
     info!("test-images: {:?}", m.test_images.shape());
     info!("test-labels: {:?}", m.test_labels.shape());
 
-    let learner = Learner{epochs: 5, batch_size: 128};
+    let learner = Learner{epochs: 2, batch_size: 64};
     let d = Discriminator::new()?;
     let g = Generator::new()?;
     learner.fit(&d, &g, &m)?;
