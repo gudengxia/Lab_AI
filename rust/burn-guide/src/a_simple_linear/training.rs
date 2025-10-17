@@ -9,7 +9,7 @@ use burn::{
     prelude::*,
     record:: {NoStdTrainingRecorder,CompactRecorder},
     tensor::backend::AutodiffBackend,
-    train::{LearnerBuilder, metric::LossMetric, metric::AccuracyMetric},
+    train::{LearnerBuilder, metric::LossMetric},
 };
 
 #[derive(Config)]

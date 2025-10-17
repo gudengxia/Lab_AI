@@ -1,5 +1,5 @@
 use burn_guide::a_simple_linear::{training::train, inference::infer, learner::run, trainer::fit};
-use burn::{backend::Autodiff, nn::LinearConfig};
+use burn::backend::Autodiff;
 use burn_candle::{Candle, CandleDevice};
 use burn_ndarray::NdArrayDevice;
 use std::time:: Instant;

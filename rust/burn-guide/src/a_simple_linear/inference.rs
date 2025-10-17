@@ -1,13 +1,14 @@
 use burn::{
     module::Module,
     record::{NoStdTrainingRecorder, Recorder},
-    tensor::{backend::Backend, Tensor}
+    tensor::backend::Backend
 };
 
 
 
 use crate::a_simple_linear::{
     model::{RegressionModelConfig, RegressionModelRecord},
+    data::TrainData,
 };
 
 pub fn infer<B: Backend>(artifact_dir: &str, device: B::Device) {
@@ -19,12 +20,11 @@ pub fn infer<B: Backend>(artifact_dir: &str, device: B::Device) {
         .init(&device)
         .load_record(record);
     
-    let x = Tensor::<B,2>::from_data([[0.9026f32, 1.0f32],[1.0f32, 1.0f32]], &device);
-
+    //let x = Tensor::<B,2>::from_data([[0.9026f32, 1.0f32],[1.0f32, 1.0f32]], &device);
+    let x = TrainData::new(&device).x_test;
     let y_hat = model.forward(x);
 
-    let predicted = y_hat.into_data().iter::<f32>()
-        .collect::<Vec<_>>();
+    let predicted = y_hat.into_data().iter::<f32>().collect::<Vec<_>>();
 
     // Print a single numeric value as an example
     // Print a single numeric value as an example

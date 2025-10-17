@@ -1,14 +1,14 @@
-use burn::data::dataset::{self, Dataset, InMemDataset};
+use burn::data::dataset::{Dataset, InMemDataset};
 use burn::prelude::Backend;
 use burn::data::dataloader::batcher::Batcher;
-use burn::tensor::{Device, Tensor};
+use burn::tensor::Tensor;
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 pub const NUM_FEATURES: usize = 2;
 
 // Pre-computed statistics for the housing dataset features
-const FEATURES_MIN: [f32; NUM_FEATURES] = [-3.12656, -2.95123];
-const FEATURES_MAX: [f32; NUM_FEATURES] = [3.752225, 2.938774];
+pub const FEATURES_MIN: [f32; NUM_FEATURES] = [-3.12656, -2.95123];
+pub const FEATURES_MAX: [f32; NUM_FEATURES] = [3.752225, 2.938774];
 #[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct SingleItem {
     #[serde(rename = "x0")]
@@ -38,20 +38,7 @@ impl RegressionDataset {
         // Build dataset from csv with tab ('\t') delimiter
         let mut rdr = csv::ReaderBuilder::new();
         let rdr = rdr.delimiter(b',');
-
         let dataset: InMemDataset<SingleItem> = InMemDataset::from_csv(path, rdr).unwrap();
-        /*let mut min = [f32::MAX; 3];
-        let mut max = [f32::MIN; 3];
-        for item in dataset.iter(){
-            if item.x0 < min[0]{min[0] = item.x0}
-            if item.x0 > max[0]{max[0] = item.x0}
-
-            if item.x1 < min[1]{min[1] = item.x1}
-            if item.x1 > max[1]{max[1] = item.x1}
-            
-            if item.y < min[2] {min[2] = item.y}
-            if item.y > max[2]{max[2] = item.y}
-        }*/
         let dataset = Self { dataset};
 
         Ok(dataset)
@@ -129,8 +116,6 @@ pub struct RegressionBatch<B: Backend> {
     pub targets: Tensor<B, 1>,
 }
 
-
-
 impl<B: Backend> Batcher<B,SingleItem, RegressionBatch<B>> for RegressionBatcher<B> {
     fn batch(&self, items: Vec<SingleItem>, device: &B::Device) -> RegressionBatch<B> {
         let mut inputs: Vec<Tensor<B, 2>> = Vec::new();
@@ -160,13 +145,14 @@ impl<B: Backend> Batcher<B,SingleItem, RegressionBatch<B>> for RegressionBatcher
     }
 }
 
-pub struct train_data<B: Backend>{
+pub struct TrainData<B: Backend>{
     pub x: Tensor<B, 2>,
     pub y: Tensor<B, 1>,
+    pub x_test: Tensor<B, 2>,
     pub len: usize
 }
 
-impl<B: Backend> train_data<B> {
+impl<B: Backend> TrainData<B> {
     pub fn new(device: &B::Device) -> Self{
         let dataset = RegressionDataset::new(true).unwrap().dataset;
         let mut inputs: Vec<Tensor<B, 2>> = Vec::new();
@@ -193,7 +179,8 @@ impl<B: Backend> train_data<B> {
 
         let len = targets.len();
         let y = Tensor::cat(targets, 0);
-        
-        Self{x, y, len}
+        let x_test = Tensor::<B, 1>::from_floats([0.9026, 1.0], device).unsqueeze().to_device(device);
+        let x_test = normalizer.to_device(device).normalize(x_test);
+        Self{x, y, x_test,  len}
     }
 }

@@ -1,14 +1,13 @@
 use burn::{
-    data::{dataloader::DataLoaderBuilder, dataset::vision::MnistDataset},
-    module::AutodiffModule,
+    data::dataloader::DataLoaderBuilder,
     nn::loss::{MseLoss, Reduction::Mean},
-    optim::{AdamConfig, Sgd, SgdConfig, GradientsParams, Optimizer},
+    optim::{SgdConfig, GradientsParams, Optimizer},
     prelude::*,
     tensor::backend::AutodiffBackend,
 };
 
 use crate::a_simple_linear::model::RegressionModelConfig;
-use crate::a_simple_linear::data::{RegressionBatch, RegressionBatcher, RegressionDataset};
+use crate::a_simple_linear::data::{TrainData, RegressionBatcher, RegressionDataset};
 #[derive(Config)]
 pub struct TrainerConfig {
     #[config(default = 3)]
@@ -56,9 +55,9 @@ pub fn fit<B: AutodiffBackend>(device: B::Device) {
 
 
     // Iterate over our training and validation loop for X epochs.
-    for epoch in 1..config.num_epochs + 1 {
+    for _epochepoch in 1..config.num_epochs + 1 {
         // Implement our training loop.
-        for (iteration, batch) in dataloader_train.iter().enumerate() {
+        for (_iteration, batch) in dataloader_train.iter().enumerate() {
             let y_hat = model.forward(batch.inputs);
             let loss = MseLoss::new()
                 .forward(y_hat.clone(), batch.targets.clone().unsqueeze_dim(1), Mean);
@@ -72,10 +71,11 @@ pub fn fit<B: AutodiffBackend>(device: B::Device) {
         }        
     }
 
-    let x = Tensor::<B,2>::from_data([[0.9026f32, 1.0f32],[1.0f32, 1.0f32]], &device);
-    let x=x.to_device(&device);
+    //let x = Tensor::<B,2>::from_data([[0.9026f32, 1.0f32],[1.0f32, 1.0f32]], &device);
+    //let x=x.to_device(&device);
+    let x = TrainData::new(&device).x_test;
     let y_hat = model.forward(x);
 
     // Print a single numeric value as an example
-    println!("Trainer Predicted y is {:?}", y_hat.into_data().to_vec::<f32>());
+    println!("Trainer Predicted y is {:?}", y_hat.into_data().iter::<f32>().collect::<Vec<_>>());
 }

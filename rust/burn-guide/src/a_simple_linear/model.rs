@@ -2,7 +2,7 @@
 use burn::{
     nn::{
         Linear, LinearConfig,
-        loss::{MseLoss, Reduction::{Sum, Mean}},
+        loss::{MseLoss, Reduction:: Mean},
     },
     prelude::*,
     tensor::backend::AutodiffBackend,
